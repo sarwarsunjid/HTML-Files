@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .wrap {
+  max-width: 600px;
+  margin: 50px auto;
+}
+.js-modal-open {
+  padding: 15px;
+  text-align: center;
+  border: solid 1px #555;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.js-modal-open:hover {
+  background: #f3f3f3;
+}
+
+.modal{
+	display: none;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+}
+.modal__bg{
+	background: rgba(0,0,0,0.8);
+	height: 100vh;
+	position: absolute;
+	width: 100%;
+}
+.modal__content{
+	background: #fff;
+	left: 50%;
+	padding: 15px;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 60%;
+}
+.modal__content .js-modal-close {
+	font-size: 13px;
+  cursor: pointer
+}
+.modal__content video {
+	width: 100%;
+	height: auto;
+	vertical-align: bottom;
+	margin-bottom: 8px;
+}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="js-modal-open" data-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">By Blender Foundation</div>
+        <div class="js-modal-open" data-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4">Elephant Dream</div>
+        <div class="js-modal-open" data-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4">For Bigger Blazes</div>
+      </div>
+      
+      <div class="modal js-modal">
+          <div class="modal__bg js-modal-close"></div>
+          <div class="modal__content">
+              <video src="" controls playsinline></video>
+              <span class="js-modal-close">× close</span>
+          </div>
+      </div>
+        
+        <script src="js/jquery.min.js" ></script>
+        <script src="js/popper.min.js" ></script>
+        <script src="js/bootstrap.min.js" ></script>
+        <!-- <script type="text/javascript" src="js/main.js" ></script> -->
+        <script>
+            $(function(){
+                $('.js-modal-open').each(function(){
+                    $(this).on('click',function(){
+                        var msrc = $(this).data('src');
+                        $.when(
+                            $('.js-modal').find('video').attr("src", msrc ),
+                            $('.js-modal').fadeIn()
+                        ) .done(function() {
+                            $('.js-modal').find('video').get(0).play()
+                        });
+                        return false;
+                    });
+                });
+                $('.js-modal-close').on('click',function(){
+                    $.when(
+                        $('.js-modal').fadeOut()
+                    ) .done(function() {
+                        $('.js-modal').find('video').attr("src", "" )
+                    });
+                    return false;
+                });
+            });
+        </script>
+</body>
+</html>
